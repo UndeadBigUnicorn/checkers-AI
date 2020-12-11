@@ -71,13 +71,7 @@ def evaluate(game, move):
 
 def next_move():
     game_copy = copy.deepcopy(game)
-    best_move = [0, 0]
-    best_score = -math.inf
-    for move in game_copy.get_possible_moves():
-        score = evaluate(game_copy, move)
-        if score > best_score:
-            best_score = score
-            best_move = move
+    best_move = max(game_copy.get_possible_moves(), key=lambda move: evaluate(game_copy, move))
 
     game.move(best_move)
     return best_move
