@@ -41,10 +41,6 @@ if __name__ == '__main__':
         if game.whose_turn() != turns[game_info['whose_turn']]:
             for move in game_info["last_move"]['last_moves']:
                 game.move(move)
-        else:
-            if game.moves[-1] != game_info["last_move"]:
-                for move in game_info["last_move"]['last_moves']:
-                    game.move(move)
 
         move = next_move()
         client.move(move)
