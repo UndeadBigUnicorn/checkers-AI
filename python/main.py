@@ -17,6 +17,14 @@ turns = {
     "BLACK": 2
 }
 
+
+def rand():
+    possible_moves = game.get_possible_moves()
+    move = random.choice(possible_moves)
+    game.move(move)
+    return move
+
+
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
 
@@ -44,5 +52,8 @@ if __name__ == '__main__':
                 for move in game_info["last_move"]['last_moves']:
                     game.move(move)
 
-            move = next_move()
+            if color == 'RED':
+                move = next_move()
+            else:
+                move = rand()
             client.move(move)
