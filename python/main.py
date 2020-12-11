@@ -8,9 +8,7 @@ client = Client()
 
 
 def wait_for_opponent(player):
-    my_move = False
-    while not my_move:
-        my_move = client.game_info()['whose_turn'] == player
+    while (not client.game_info()['whose_turn'] == player) and (client.game_info()['winner'] is None):
         time.sleep(.05)
 
 
@@ -34,27 +32,17 @@ if __name__ == '__main__':
         move = next_move()
         client.move(move)
 
-    while True:
+    game_info = client.game_info()
+    while game_info["winner"] is None:
         wait_for_opponent(color)
         game_info = client.game_info()
-        # opponent's move
-        if game.whose_turn() != turns[game_info['whose_turn']]:
-            for move in game_info["last_move"]['last_moves']:
-                game.move(move)
 
-        move = next_move()
-        client.move(move)
+        # double check if game is won
+        if game_info["winner"] is None:
+            # opponent's move
+            if game.whose_turn() != turns[game_info['whose_turn']]:
+                for move in game_info["last_move"]['last_moves']:
+                    game.move(move)
 
-    # moves = [9, 13] if color == "RED" else [24, 20]  # make a move 9 -> 13 or 24 -> 20
-    # logging.debug(f'Making a move {moves}')
-    # client.move(moves)
-    # logging.debug(f'Made a move')
-    #
-    # logging.debug(f'Getting game info...')
-    # info = client.game_info()
-    # logging.debug(f'Got game info {info}')
-    #
-    # moves = [10, 14] if color == "RED" else [21, 17]  # make a move 10 -> 14 or 21 -> 17
-    # logging.debug(f'Making a move {moves}')
-    # client.move(moves)
-    # logging.debug(f'Made a move')
+            move = next_move()
+            client.move(move)

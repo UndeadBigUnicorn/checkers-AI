@@ -24,14 +24,17 @@ diagonals = [
     [29]
 ]
 
+
 def on_diagonal(move, enemy_move):
     return len([move[1] in diag and enemy_move[0] in diag and enemy_move[1] in diag for diag in diagonals]) > 0
+
 
 def is_over(move, enemy_move):
     # logic is simple: moves should be on the same diagonal
     # if enemy move starting point is before our checker and end point is after our checker
     # than our checker was beaten
     return on_diagonal(move, enemy_move) and abs(enemy_move[0] - move[1]) >= 3 and abs(enemy_move[1] - move[1]) <= 6
+
 
 def enemy_beat(game, move):
     game_copy = copy.deepcopy(game)
@@ -42,8 +45,8 @@ def enemy_beat(game, move):
 
     return False
 
-def evaluate(game, move):
 
+def evaluate(game, move):
     score = 0
 
     # if beat enemy's checker
@@ -67,7 +70,6 @@ def evaluate(game, move):
 
 
 def next_move():
-
     game_copy = copy.deepcopy(game)
     best_move = [0, 0]
     best_score = -math.inf
@@ -87,5 +89,6 @@ if __name__ == '__main__':
         for i in range(25):
             print(game.get_possible_moves())
             print(next_move())
+
 
     play_test()
