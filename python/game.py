@@ -23,7 +23,7 @@ diagonals = [
     [21, 25, 30],
     [29]
 ]
-
+toilet_count = 0
 
 def on_diagonal(move, enemy_move):
     return len([move[1] in diag and enemy_move[0] in diag and enemy_move[1] in diag for diag in diagonals]) > 0
@@ -33,7 +33,7 @@ def is_over(move, enemy_move):
     # logic is simple: moves should be on the same diagonal
     # if enemy move starting point is before our checker and end point is after our checker
     # than our checker was beaten
-    return on_diagonal(move, enemy_move) and abs(enemy_move[0] - move[1]) >= 3 and abs(enemy_move[1] - move[1]) <= 6
+    return on_diagonal(move, enemy_move) and abs(enemy_move[1] - move[1]) <= 6
 
 
 def enemy_beat(game, move):
@@ -47,6 +47,7 @@ def enemy_beat(game, move):
 
 
 def evaluate(game, move):
+    global toilet_count
     score = 0
 
     # if beat enemy's checker
@@ -54,8 +55,11 @@ def evaluate(game, move):
         score += 10
 
     # if in toilet -> nobody could beat you
-    if move[-1] in toilet:
+    if move[-1] in toilet and toilet_count < 3:
+        toilet_count += 1
         score += 5
+    else:
+        toilet_count = 0
 
     if score != 0:
         return score
