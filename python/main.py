@@ -28,7 +28,8 @@ def rand():
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
 
-    name = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+    # name = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+    name = 'Joper'
     logging.info(f'Started client for a team {name}')
 
     logging.debug('Connection to a server...')
