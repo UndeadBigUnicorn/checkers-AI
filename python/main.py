@@ -52,8 +52,5 @@ if __name__ == '__main__':
                 for move in game_info["last_move"]['last_moves']:
                     game.move(move)
 
-            if color == 'RED':
-                move = next_move()
-            else:
-                move = rand()
+            move = next_move()
             client.move(move)
